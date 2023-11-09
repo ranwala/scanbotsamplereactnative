@@ -25,7 +25,10 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import ScanbotSDK, { DocumentScannerConfiguration, InitializationOptions } from 'react-native-scanbot-sdk';
+import ScanbotSDK, {
+  DocumentScannerConfiguration,
+  InitializationOptions,
+} from 'react-native-scanbot-sdk';
 
 const initScanbotSdk = async () => {
   const options: InitializationOptions = {
@@ -33,14 +36,14 @@ const initScanbotSdk = async () => {
     loggingEnabled: true, // Consider switching logging OFF in production builds for security and performance reasons!
     documentDetectorMode: 'ML_BASED',
   };
-  
+
   try {
     const result = await ScanbotSDK.initializeSDK(options);
     console.log(result);
   } catch (e: any) {
     console.error('Error initializing Scanbot SDK:', e.message);
   }
-}
+};
 
 const startDocumentScanner = async () => {
   const config: DocumentScannerConfiguration = {
@@ -62,8 +65,25 @@ const startDocumentScanner = async () => {
   if (result.status === 'OK') {
     console.log(JSON.stringify(result));
   }
-}
+};
 
+const startLicensePlateScanner = async () => {
+  try {
+    console.log('testing1');
+    const result = await ScanbotSDK.UI.startLicensePlateScanner({
+      topBarBackgroundColor: '#00ffff',
+      scanStrategy: "MlBased",
+    });
+    console.log('testing2');
+    if (result.status === 'OK') {
+      console.log('testing3');
+      alert(JSON.stringify(result));
+    }
+  } catch (e: any) {
+    console.log('testing4');
+    alert(e.message);
+  }
+}
 
 function App(): JSX.Element {
   // initialize scanbot SDK
@@ -90,8 +110,8 @@ function App(): JSX.Element {
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
           <Button
-            onPress={startDocumentScanner}
-            title="Scan Document"
+            onPress={startLicensePlateScanner}
+            title="Scan License Plate"
             color="#841584"
             accessibilityLabel="Learn more about this purple button"
           />
