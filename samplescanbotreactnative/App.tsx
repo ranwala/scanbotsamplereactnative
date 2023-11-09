@@ -69,18 +69,14 @@ const startDocumentScanner = async () => {
 
 const startLicensePlateScanner = async () => {
   try {
-    console.log('testing1');
     const result = await ScanbotSDK.UI.startLicensePlateScanner({
       topBarBackgroundColor: '#00ffff',
       scanStrategy: "MlBased",
     });
-    console.log('testing2');
     if (result.status === 'OK') {
-      console.log('testing3');
       alert(JSON.stringify(result));
     }
   } catch (e: any) {
-    console.log('testing4');
     alert(e.message);
   }
 }
